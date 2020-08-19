@@ -1,7 +1,7 @@
 using NUnit.Framework;
-using RomanianIntegerConverter.Model;
+using RomanIntegerConverter.Model;
 
-namespace RomanianIntegerConverterTests
+namespace RomanIntegerConverterTests
 {
     public class ConvertIntegerToRomanTest
     {

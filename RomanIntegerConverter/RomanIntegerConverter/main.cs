@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using RomanianIntegerConverter.Model;
+using RomanIntegerConverter.Model;
 
-namespace RomanianIntegerConverter
+namespace RomanIntegerConverter
 {
     class main
     {

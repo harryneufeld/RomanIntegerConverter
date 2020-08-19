@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RomanianIntegerConverter.Model
+namespace RomanIntegerConverter.Model
 {
     public struct RomanInteger
     {
