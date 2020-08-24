@@ -9,6 +9,7 @@ namespace RomanIntegerConverter.Model
     {
         #region fields
         private int _value;
+        private string _name;
         #endregion
 
         #region static operators
@@ -24,30 +25,56 @@ namespace RomanIntegerConverter.Model
         #endregion
 
         #region public methods
-        public string ConvertToRoman()
+        public string GetRomanNumber()
         {
-            if (_value == 1)
-                return "I";
-            else
-                return "";
+            if (String.IsNullOrWhiteSpace(_name))
+            {
+                _name = "";
+                GetHighestValueOfSelf();
+            }
+            return _name;
         }
         #endregion
 
         #region private methods
         private int GetHighestValueOfSelf()
         {
-            int n = 0;
-            foreach (RomanNumbers x in Enum.GetValues(typeof(RomanNumbers)))
+            int n = _value;
+
+            // TODO: FIX FUCKING ORDER
+            foreach (RomanNumbers v in Enum.GetValues(typeof(RomanNumbers)))
             {
-                for (int i = 0; n == 0; i++)
+                bool done = false;
+                int i = 0;
+                while (done == false)
                 {
-                    n = DivideThroughHighestValue(x);
+                    int buffer = n;
+                    int x = DivideThroughHighestValue(n, (int)v);
+
+                    if (x < 0)
+                        done = SetOrAttachRomanValue((int)v, i, buffer);
+                    else if (x == 0)
+                        done = SetOrAttachRomanValue((int)v, i, x);
+                    else
+                        n = x;
+
+                    i++;
                 }
             }
             return 0;
         }
 
-        private int DivideThroughHighestValue(int x, RomanNumbers v) => x / (int)Enum.GetValues(typeof(RomanNumbers), v.ToString());
+        private bool SetOrAttachRomanValue(int v, int i, int buffer)
+        {
+            while (i >= 0)
+            {
+                _name = Enum.GetName(typeof(RomanNumbers), v).ToString() + _name;
+                i--;
+            }
+            return true;
+        }
+
+        private int DivideThroughHighestValue(int n, int v) => n / v;
         #endregion
     }
 

@@ -16,7 +16,7 @@ namespace RomanIntegerConverterTests
         {
             RomanInteger number = 1;
             
-            var romanNumber = number.ConvertToRoman();
+            var romanNumber = number.GetRomanNumber();
 
             Assert.IsFalse(number == 1 && romanNumber != "I");
         }
