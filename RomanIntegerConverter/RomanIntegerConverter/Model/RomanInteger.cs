@@ -1,5 +1,5 @@
-﻿using RomanIntegerConverter.Datatypes;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,11 +10,24 @@ namespace RomanIntegerConverter.Model
         #region fields
         private int _value;
         private string _name;
+        private static Hashtable _romanNumbers;
         #endregion
 
         #region static operators
         public static implicit operator RomanInteger(int value)
         {
+            _romanNumbers = new Hashtable()
+            {
+                { 10000, "O" },
+                { 5000, "D" },
+                { 1000, "M" },
+                { 100, "C" },
+                { 50, "L" },
+                { 10, "X" },
+                { 5, "V" },
+                { 1, "I" }
+            };
+            
             return new RomanInteger { _value = value };
         }
 
@@ -41,20 +54,19 @@ namespace RomanIntegerConverter.Model
         {
             int n = _value;
 
-            // TODO: FIX FUCKING ORDER
-            foreach (RomanNumbers v in Enum.GetValues(typeof(RomanNumbers)))
+            foreach (DictionaryEntry v in _romanNumbers)
             {
                 bool done = false;
                 int i = 0;
                 while (done == false)
                 {
                     int buffer = n;
-                    int x = DivideThroughHighestValue(n, (int)v);
+                    int x = DivideThroughHighestValue(n, (int)v.Key);
 
                     if (x < 0)
-                        done = SetOrAttachRomanValue((int)v, i, buffer);
+                        done = SetOrAttachRomanValue((string)v.Value, i, buffer);
                     else if (x == 0)
-                        done = SetOrAttachRomanValue((int)v, i, x);
+                        done = SetOrAttachRomanValue((string)v.Value, i, x);
                     else
                         n = x;
 
@@ -64,11 +76,11 @@ namespace RomanIntegerConverter.Model
             return 0;
         }
 
-        private bool SetOrAttachRomanValue(int v, int i, int buffer)
+        private bool SetOrAttachRomanValue(string v, int i, int buffer)
         {
             while (i >= 0)
             {
-                _name = Enum.GetName(typeof(RomanNumbers), v).ToString() + _name;
+                _name = v + _name;
                 i--;
             }
             return true;
