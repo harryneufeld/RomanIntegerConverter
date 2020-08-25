@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RomanIntegerConverter.Model
 {
@@ -10,13 +12,13 @@ namespace RomanIntegerConverter.Model
         #region fields
         private int _value;
         private string _name;
-        private static Hashtable _romanNumbers;
+        private static SortedDictionary<int, string> _romanNumbers;
         #endregion
 
         #region static operators
         public static implicit operator RomanInteger(int value)
         {
-            _romanNumbers = new Hashtable()
+            _romanNumbers = new SortedDictionary<int, string>()
             {
                 { 10000, "O" },
                 { 5000, "D" },
@@ -53,20 +55,21 @@ namespace RomanIntegerConverter.Model
         private int GetHighestValueOfSelf()
         {
             int n = _value;
+            var romanNumbers = _romanNumbers.OrderByDescending(x => x.Key);
 
-            foreach (DictionaryEntry v in _romanNumbers)
+            foreach (var v in romanNumbers)
             {
                 bool done = false;
                 int i = 0;
                 while (done == false)
                 {
                     int buffer = n;
-                    int x = DivideThroughHighestValue(n, (int)v.Key);
+                    int x = DivideThroughHighestValue(n, v.Key);
 
                     if (x < 0)
-                        done = SetOrAttachRomanValue((string)v.Value, i, buffer);
+                        done = SetOrAttachRomanValue(v.Value, i, buffer);
                     else if (x == 0)
-                        done = SetOrAttachRomanValue((string)v.Value, i, x);
+                        done = SetOrAttachRomanValue(v.Value, i, x);
                     else
                         n = x;
 
