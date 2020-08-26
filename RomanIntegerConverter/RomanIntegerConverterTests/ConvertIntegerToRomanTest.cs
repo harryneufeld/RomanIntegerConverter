@@ -12,13 +12,23 @@ namespace RomanIntegerConverterTests
         }
 
         [Test]
-        public void ConvertIntegerToRoman()
+        public void ConvertIntToRomanTest1()
         {
-            RomanInteger number = 1;
+            RomanInteger number = 102;
             
             var romanNumber = number.GetRomanNumber();
 
-            Assert.IsFalse(number == 1 && romanNumber != "I");
+            Assert.IsTrue(romanNumber == "CII");
+        }
+
+        [Test]
+        public void ConvertIntToRomanTest2()
+        {
+            RomanInteger number = 1024;
+
+            var romanNumber = number.GetRomanNumber();
+
+            Assert.IsTrue(romanNumber == "MXXIV" || romanNumber == "MXXIIII");
         }
     }
 }

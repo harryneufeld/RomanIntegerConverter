@@ -11,7 +11,7 @@ namespace RomanIntegerConverterTests
       
         public static void Main()
         {
-            number = 101;
+            number = 1024;
             number.GetRomanNumber();
         }
     }

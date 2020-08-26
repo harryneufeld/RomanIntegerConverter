@@ -52,44 +52,36 @@ namespace RomanIntegerConverter.Model
         #endregion
 
         #region private methods
-        private int GetHighestValueOfSelf()
+        private void GetHighestValueOfSelf()
         {
             int n = _value;
             var romanNumbers = _romanNumbers.OrderByDescending(x => x.Key);
 
             foreach (var v in romanNumbers)
             {
-                bool done = false;
-                int i = 0;
-                while (done == false)
+                bool skip = false;
+                while (n >= 1 && !skip)
                 {
-                    int buffer = n;
-                    int x = DivideThroughHighestValue(n, v.Key);
-
-                    if (x < 0)
-                        done = SetOrAttachRomanValue(v.Value, i, buffer);
-                    else if (x == 0)
-                        done = SetOrAttachRomanValue(v.Value, i, x);
+                    float i = DivideThroughHighestValue(n, v.Key);
+                    if (i >= 1)
+                    {
+                        n -= v.Key;
+                        SetOrAttachRomanNumber(v.Value);
+                    }
                     else
-                        n = x;
-
-                    i++;
+                    {
+                        skip = true;
+                    }
                 }
             }
-            return 0;
         }
 
-        private bool SetOrAttachRomanValue(string v, int i, int buffer)
+        private void SetOrAttachRomanNumber(string romanNumber)
         {
-            while (i >= 0)
-            {
-                _name = v + _name;
-                i--;
-            }
-            return true;
+            _name += romanNumber;
         }
 
-        private int DivideThroughHighestValue(int n, int v) => n / v;
+        private float DivideThroughHighestValue(int n, int v) => (float)n / v;
         #endregion
     }
 
