@@ -20,13 +20,24 @@ namespace RomanIntegerConverter.Model
         {
             _romanNumbers = new SortedDictionary<int, string>()
             {
-                { 10000, "O" },
-                { 5000, "D" },
+                { 100000, "ↈ" },
+                { 50000, "ↇ" },
+                { 10000, "ↂ" },
+                { 5000, "ↁ" },
                 { 1000, "M" },
+                { 900, "CM" },
+                { 500, "D" },
                 { 100, "C" },
+                { 90, "XC" },
                 { 50, "L" },
+                { 40, "XL" },
                 { 10, "X" },
+                { 9, "IX" },
+                { 8, "VIII" },
+                { 7, "VII" },
+                { 6, "VI" },
                 { 5, "V" },
+                { 4, "IV" },
                 { 1, "I" }
             };
             
